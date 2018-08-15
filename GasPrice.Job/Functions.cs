@@ -1,20 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GasPrice.Data.AzureStorage;
+using GasPrice.Data.Services;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Host;
 
 namespace GasPrice.Job
 {
     public class Functions
     {
-        // This function will get triggered/executed when a new message is written 
-        // on an Azure Queue called queue.
-        public static void ProcessQueueMessage([QueueTrigger("queue")] string message, TextWriter log)
+        public static void GasRunner([TimerTrigger("0 * * * * *", RunOnStartup = true)] TimerInfo timerInfo, TextWriter log)
         {
-            log.WriteLine(message);
+            log.WriteLine($"C# Timer trigger function executed at: {DateTime.Now}");
+
+            var gs = new GasPriceService();
+            var gm = gs.GetGasMeasure();
+
+            var gp = new GasAzurePersistor(AmbientConnectionStringProvider.Instance.GetConnectionString(ConnectionStringNames.Storage));
+            gp.Save(gm);
+
+            log.WriteLine($"Result: RSK={gm.RskGasPriceInUsd()} - ETH={gm.EthGasPriceInUsd()}");
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs;
+﻿using Microsoft.Azure.WebJobs;
 
 namespace GasPrice.Job
 {
@@ -15,6 +10,7 @@ namespace GasPrice.Job
         static void Main()
         {
             var config = new JobHostConfiguration();
+            config.UseTimers();
 
             if (config.IsDevelopment)
             {

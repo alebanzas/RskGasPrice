@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasPrice.Job", "GasPrice.Job\GasPrice.Job.csproj", "{44668C0C-E279-45C3-8023-7EF67C4C3592}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasPrice.Data", "GasPrice.Data\GasPrice.Data.csproj", "{E23FFD84-A1FC-4461-A160-2ED889664BEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasPrice.Tests", "GasPrice.Tests\GasPrice.Tests.csproj", "{CFC2DCF7-73AC-42AA-8588-6EA99A9BEFF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{44668C0C-E279-45C3-8023-7EF67C4C3592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44668C0C-E279-45C3-8023-7EF67C4C3592}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44668C0C-E279-45C3-8023-7EF67C4C3592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E23FFD84-A1FC-4461-A160-2ED889664BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E23FFD84-A1FC-4461-A160-2ED889664BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E23FFD84-A1FC-4461-A160-2ED889664BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E23FFD84-A1FC-4461-A160-2ED889664BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFC2DCF7-73AC-42AA-8588-6EA99A9BEFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFC2DCF7-73AC-42AA-8588-6EA99A9BEFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFC2DCF7-73AC-42AA-8588-6EA99A9BEFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFC2DCF7-73AC-42AA-8588-6EA99A9BEFF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
