@@ -1,0 +1,149 @@
+﻿@model List<GasPrice.Data.Models.GasMeasurement>
+@{
+    ViewBag.Title = "Home Page";
+
+    var models = Model.OrderByDescending(x => x.Moment);
+    var f = models.FirstOrDefault();
+    var eth = new List<string>();
+    var rsk = new List<string>();
+    const string template = "{{ x: new Date({1}, {2}, {3}, {4}, {5}), y: {0} }}";
+    foreach (var m in models)
+    {
+        var e = m.EthGasPriceInUsd() * 100;
+        var r = m.RskGasPriceInUsd() * 100;
+        eth.Add(string.Format(template, e.ToString("##.000"), m.Moment.Year, m.Moment.Month, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
+        rsk.Add(string.Format(template, r.ToString("##.000"), m.Moment.Year, m.Moment.Month, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
+    }
+    
+    var et = f.EthGasPriceInUsd() * 100;
+    var rr = f.RskGasPriceInUsd() * 100;
+    var style = et > rr ? "green" : "red";
+}
+@section scripts
+{
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+}
+
+<style type="text/css">
+    .red {
+        background-color: red;
+        color: white;
+    }
+
+    .green {
+        background-color: green;
+        color: white;
+    }
+</style>
+
+<h1>Gas price - ETH vs RSK</h1>
+
+<h2>Now</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">ETH</div>
+                <div class="panel-body">@(et.ToString("C3"))</div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">RSK</div>
+                <div class="panel-body">@(rr.ToString("C3"))</div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">ETH vs RSK</div>
+                <div class="panel-body @style">@((1-((rr / et)*100)).ToString("F")) %</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="chartContainer" style="height: 400px; width: 100%;"></div>
+@*
+    <table style="width: 100%;">
+        <tr>
+            <td>Time</td>
+            <td>ETH Price</td>
+            <td>RSK Price</td>
+            <td>Time</td>
+        </tr>
+        @foreach (var m in Model.OrderByDescending(x => x.Moment))
+        {
+            var et = m.EthGasPriceInUsd() * 100;
+            var rr = m.RskGasPriceInUsd() * 100;
+            var style = et > rr ? "green" : "red";
+            <tr>
+                <td>@m.Moment.ToString("s")</td>
+                <td>@(et.ToString("F")) cents</td>
+                <td>@(rr.ToString("F")) cents</td>
+                <td class="@style">
+                    @((et - rr).ToString("F"))
+                </td>
+            </tr>
+        }
+    </table>
+*@
+<script>
+    window.onload = function () {
+
+        var options = {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Today"
+            },
+            axisX: {
+                valueFormatString: "DDD HH:mm:ss"
+            },
+            axisY: {
+                title: "Gas price in USD cents",
+                suffix: "cents"
+                //minimum: 30
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "bottom",
+                horizontalAlign: "left",
+                dockInsidePlotArea: true,
+                itemclick: toogleDataSeries
+            },
+            data: [{
+                type: "line",
+                showInLegend: true,
+                name: "ETH Price",
+                markerType: "square",
+                xValueFormatString: "DDD HH:mm:ss",
+                color: "#2364C0",
+                yValueFormatString: "#.### cents USD",
+                dataPoints: [@string.Join(",", eth.ToArray())]
+            },
+            {
+                type: "line",
+                showInLegend: true,
+                name: "RSK Price",
+                //lineDashType: "dash",
+                color: "#119D52",
+                yValueFormatString: "#.### cents USD",
+                dataPoints: [@string.Join(",", rsk.ToArray())]
+            }]
+        };
+        $("#chartContainer").CanvasJSChart(options);
+
+        function toogleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            e.chart.render();
+        }
+
+    }
+</script>

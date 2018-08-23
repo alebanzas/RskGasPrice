@@ -60,6 +60,7 @@
     <Compile Include="Scraper.cs" />
     <Compile Include="Services\CryptoPriceService.cs" />
     <Compile Include="Services\GasPriceService.cs" />
+    <Compile Include="Services\WebCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
