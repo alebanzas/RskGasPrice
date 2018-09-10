@@ -3,9 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title RSK Gas Station</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124571797-1"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="/Content/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/favicon-16x16.png" />
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-124571797-1');
+    </script>
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

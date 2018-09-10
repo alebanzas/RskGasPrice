@@ -1,6 +1,6 @@
 ﻿@model List<GasPrice.Data.Models.GasMeasurement>
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "";
 
     var models = Model.OrderByDescending(x => x.Moment);
     var f = models.FirstOrDefault();
@@ -11,8 +11,8 @@
     {
         var e = m.EthGasPriceInUsd() * 100;
         var r = m.RskGasPriceInUsd() * 100;
-        eth.Add(string.Format(template, e.ToString("##.000"), m.Moment.Year, m.Moment.Month, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
-        rsk.Add(string.Format(template, r.ToString("##.000"), m.Moment.Year, m.Moment.Month, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
+        eth.Add(string.Format(template, e.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
+        rsk.Add(string.Format(template, r.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
     }
     
     var et = f.EthGasPriceInUsd() * 100;
@@ -43,21 +43,38 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading">ETH</div>
+                <div class="panel-heading">ETH (USD cents)</div>
                 <div class="panel-body">@(et.ToString("C3"))</div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading">RSK</div>
+                <div class="panel-heading">RSK (USD cents)</div>
                 <div class="panel-body">@(rr.ToString("C3"))</div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading">ETH vs RSK</div>
-                <div class="panel-body @style">@((1-((rr / et)*100)).ToString("F")) %</div>
+                <div class="panel-heading">RSK vs ETH</div>
+                <div class="panel-body @style">@($"{(et-rr):+;-;} {((et / rr) *100):F} %")</div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">ETH Value (USD)</div>
+                <div class="panel-body">@(f.EthVsUsd.ToString("C3"))</div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">BTC Value (USD)</div>
+                <div class="panel-body">@(f.BtcVsUsd.ToString("C3"))</div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+
         </div>
     </div>
 </div>

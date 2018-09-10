@@ -11,24 +11,30 @@ namespace GasPrice.Web.Controllers
     public class HomeController : Controller
     {
         private readonly WebCache _cache = new WebCache();
-        public static string CacheKey = nameof(HomeController).ToLowerInvariant();
 
-        public ActionResult Index()
+        public static string CacheKey(DateTime d)
         {
-            if (_cache.Get<List<GasMeasurement>>(CacheKey) == null)
-            {
-                _cache.Put(CacheKey, GetGasInfo(), TimeSpan.FromMinutes(5));
-            }
-
-            return View(_cache.Get<List<GasMeasurement>>(CacheKey));
+            return $"{nameof(HomeController).ToLowerInvariant()}.{0}";
         }
 
-        private static List<GasMeasurement> GetGasInfo()
+        public ActionResult Index(DateTime? date)
+        {
+            var d = date ?? DateTime.UtcNow;
+            var ck = CacheKey(d);
+
+            if (_cache.Get<List<GasMeasurement>>(ck) == null)
+            {
+                _cache.Put(CacheKey(date ?? DateTime.UtcNow), GetGasInfo(d), TimeSpan.FromMinutes(5));
+            }
+
+            return View(_cache.Get<List<GasMeasurement>>(ck));
+        }
+
+        private static List<GasMeasurement> GetGasInfo(DateTime? d)
         {
             var gap = new GasAzurePersistor(ConfigurationManager.ConnectionStrings["AzureWebJobsStorage"].ConnectionString);
 
-            var d = DateTime.UtcNow;
-            var l = gap.Get(d);
+            var l = gap.Get(d ?? DateTime.UtcNow);
             return l;
         }
     }
