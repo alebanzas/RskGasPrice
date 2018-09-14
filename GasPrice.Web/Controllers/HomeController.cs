@@ -1,41 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Web.Mvc;
-using GasPrice.Data.AzureStorage;
-using GasPrice.Data.Models;
 using GasPrice.Data.Services;
+using GasPrice.Web.Models;
 
 namespace GasPrice.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly WebCache _cache = new WebCache();
-
-        public static string CacheKey(DateTime d)
+        private readonly GasMeasurementService _gasService;
+        public HomeController()
         {
-            return $"{nameof(HomeController).ToLowerInvariant()}.{0}";
+            _gasService = new GasMeasurementService();
         }
 
         public ActionResult Index(DateTime? date)
         {
             var d = date ?? DateTime.UtcNow;
-            var ck = CacheKey(d);
+            var list = _gasService.GetByDate(d);
+            var summary = _gasService.GetSummaryByDate(d);
+            var dayList = _gasService.GetSummaryByDate(DateTime.UtcNow.AddDays(-14), DateTime.UtcNow);
 
-            if (_cache.Get<List<GasMeasurement>>(ck) == null)
+            var model = new IndexViewModel
             {
-                _cache.Put(CacheKey(date ?? DateTime.UtcNow), GetGasInfo(d), TimeSpan.FromMinutes(5));
-            }
+                TodaySummary = summary,
+                TodayList = list,
+                SummaryList = dayList
+            };
 
-            return View(_cache.Get<List<GasMeasurement>>(ck));
+            return View(model);
         }
 
-        private static List<GasMeasurement> GetGasInfo(DateTime? d)
+        public ActionResult History(DateTime? from, DateTime? to)
         {
-            var gap = new GasAzurePersistor(ConfigurationManager.ConnectionStrings["AzureWebJobsStorage"].ConnectionString);
+            var f = from ?? DateTime.UtcNow.AddDays(-7);
+            var t = to ?? DateTime.UtcNow;
 
-            var l = gap.Get(d ?? DateTime.UtcNow);
-            return l;
+            var dayList = _gasService.GetSummaryByDate(f, t);
+
+            var model = new HistoryViewModel
+            {
+                From = f,
+                To = t,
+                DayList = dayList
+            };
+
+            return View(model);
         }
     }
 }

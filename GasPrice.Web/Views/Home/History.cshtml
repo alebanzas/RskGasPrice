@@ -1,0 +1,82 @@
+﻿@model GasPrice.Web.Models.HistoryViewModel
+@{
+    ViewBag.Title = "";
+    
+    var eth = new List<string>();
+    var rsk = new List<string>();
+    const string template = "{{ x: new Date({1}, {2}, {3}), y: {0} }}";
+    foreach (var m in Model.DayList)
+    {
+        var e = m.EthGasPriceInUsd() * 100;
+        var r = m.RskGasPriceInUsd() * 100;
+        eth.Add(string.Format(template, e.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day));
+        rsk.Add(string.Format(template, r.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day));
+    }
+}
+@section scripts
+{
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+}
+
+
+<h2></h2>
+
+<div id="chartContainer" style="height: 400px; width: 100%;"></div>
+
+<script>
+    window.onload = function () {
+
+        var options = {
+            animationEnabled: true,
+            theme: "light2",
+            axisX: {
+                valueFormatString: "DD MMM"
+            },
+            axisY: {
+                title: "Gas price in USD cents",
+                suffix: "cents"
+                //minimum: 30
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "bottom",
+                horizontalAlign: "left",
+                dockInsidePlotArea: true,
+                itemclick: toogleDataSeries
+            },
+            data: [{
+                type: "line",
+                showInLegend: true,
+                name: "ETH Price",
+                markerType: "square",
+                xValueFormatString: "DD MMM",
+                color: "#2364C0",
+                yValueFormatString: "#.### cents USD",
+                dataPoints: [@string.Join(",", eth.ToArray())]
+            },
+            {
+                type: "line",
+                showInLegend: true,
+                name: "RSK Price",
+                //lineDashType: "dash",
+                color: "#119D52",
+                yValueFormatString: "#.### cents USD",
+                dataPoints: [@string.Join(",", rsk.ToArray())]
+            }]
+        };
+        $("#chartContainer").CanvasJSChart(options);
+
+        function toogleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            e.chart.render();
+        }
+
+    }
+</script>

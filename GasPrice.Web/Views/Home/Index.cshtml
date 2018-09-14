@@ -1,22 +1,29 @@
-﻿@model List<GasPrice.Data.Models.GasMeasurement>
+﻿@model GasPrice.Web.Models.IndexViewModel
 @{
     ViewBag.Title = "";
 
-    var models = Model.OrderByDescending(x => x.Moment);
-    var f = models.FirstOrDefault();
     var eth = new List<string>();
     var rsk = new List<string>();
+    var ethToday = new List<string>();
+    var rskToday = new List<string>();
     const string template = "{{ x: new Date({1}, {2}, {3}, {4}, {5}), y: {0} }}";
-    foreach (var m in models)
+    foreach (var m in Model.SummaryList)
     {
         var e = m.EthGasPriceInUsd() * 100;
         var r = m.RskGasPriceInUsd() * 100;
         eth.Add(string.Format(template, e.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
         rsk.Add(string.Format(template, r.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
     }
-    
-    var et = f.EthGasPriceInUsd() * 100;
-    var rr = f.RskGasPriceInUsd() * 100;
+    foreach (var m in Model.TodayList)
+    {
+        var e = m.EthGasPriceInUsd() * 100;
+        var r = m.RskGasPriceInUsd() * 100;
+        ethToday.Add(string.Format(template, e.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
+        rskToday.Add(string.Format(template, r.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
+    }
+
+    var et = Model.TodaySummary.EthGasPriceInUsd() * 100;
+    var rr = Model.TodaySummary.RskGasPriceInUsd() * 100;
     var style = et > rr ? "green" : "red";
 }
 @section scripts
@@ -36,8 +43,6 @@
     }
 </style>
 
-<h1>Gas price - ETH vs RSK</h1>
-
 <h2>Now</h2>
 <div class="container">
     <div class="row">
@@ -56,7 +61,7 @@
         <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-heading">RSK vs ETH</div>
-                <div class="panel-body @style">@($"{(et-rr):+;-;} {((et / rr) *100):F} %")</div>
+                <div class="panel-body @style">@($"{(et - rr):+;-;} {((et / rr) * 100):F} %")</div>
             </div>
         </div>
     </div>
@@ -64,13 +69,13 @@
         <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-heading">ETH Value (USD)</div>
-                <div class="panel-body">@(f.EthVsUsd.ToString("C3"))</div>
+                <div class="panel-body">@(Model.TodaySummary.EthVsUsd.ToString("C3"))</div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-heading">BTC Value (USD)</div>
-                <div class="panel-body">@(f.BtcVsUsd.ToString("C3"))</div>
+                <div class="panel-body">@(Model.TodaySummary.BtcVsUsd.ToString("C3"))</div>
             </div>
         </div>
         <div class="col-sm-4">
@@ -79,31 +84,34 @@
     </div>
 </div>
 
-<div id="chartContainer" style="height: 400px; width: 100%;"></div>
-@*
-    <table style="width: 100%;">
+<h2>Last 14 days</h2>
+<div id="summary" style="height: 400px; width: 100%;"></div>
+
+<table style="width: 100%;">
+    <tr>
+        <th>Day</th>
+        <th>ETH Price</th>
+        <th>RSK Price</th>
+        <th>Time</th>
+    </tr>
+    @foreach (var m in Model.SummaryList.OrderByDescending(x => x.Moment))
+    {
+        var met = m.EthGasPriceInUsd() * 100;
+        var mrr = m.RskGasPriceInUsd() * 100;
         <tr>
-            <td>Time</td>
-            <td>ETH Price</td>
-            <td>RSK Price</td>
-            <td>Time</td>
+            <td>@m.Moment.ToString("yyyy MMMM dd")</td>
+            <td>@(met.ToString("F")) cents</td>
+            <td>@(mrr.ToString("F")) cents</td>
+            <td class="@(met > mrr ? "green" : "red")">
+                @($"{(met - mrr):+;-;} {((met / mrr) * 100):F} %")
+            </td>
         </tr>
-        @foreach (var m in Model.OrderByDescending(x => x.Moment))
-        {
-            var et = m.EthGasPriceInUsd() * 100;
-            var rr = m.RskGasPriceInUsd() * 100;
-            var style = et > rr ? "green" : "red";
-            <tr>
-                <td>@m.Moment.ToString("s")</td>
-                <td>@(et.ToString("F")) cents</td>
-                <td>@(rr.ToString("F")) cents</td>
-                <td class="@style">
-                    @((et - rr).ToString("F"))
-                </td>
-            </tr>
-        }
-    </table>
-*@
+    }
+</table>
+
+<h2>Today data</h2>
+<div id="today" style="height: 400px; width: 100%;"></div>
+
 <script>
     window.onload = function () {
 
@@ -111,8 +119,51 @@
             animationEnabled: true,
             theme: "light2",
             title: {
-                text: "Today"
+                text: "Last 14 days"
             },
+            axisX: {
+                valueFormatString: "DD-MM-YY"
+            },
+            axisY: {
+                title: "Gas price in USD cents",
+                suffix: "cents"
+                //minimum: 30
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "bottom",
+                horizontalAlign: "left",
+                dockInsidePlotArea: true,
+                itemclick: toogleDataSeries
+            },
+            data: [{
+                    type: "line",
+                    showInLegend: true,
+                    name: "ETH Price",
+                    markerType: "square",
+                    xValueFormatString: "DD-MM-YY",
+                    color: "#2364C0",
+                    yValueFormatString: "#.### cents USD",
+                    dataPoints: [@string.Join(",", eth.ToArray())]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: "RSK Price",
+                    //lineDashType: "dash",
+                    color: "#119D52",
+                    yValueFormatString: "#.### cents USD",
+                    dataPoints: [@string.Join(",", rsk.ToArray())]
+                }]
+        };
+        $("#summary").CanvasJSChart(options);
+
+        var optionsToday = {
+            animationEnabled: true,
+            theme: "light2",
             axisX: {
                 valueFormatString: "DDD HH:mm:ss"
             },
@@ -132,26 +183,26 @@
                 itemclick: toogleDataSeries
             },
             data: [{
-                type: "line",
-                showInLegend: true,
-                name: "ETH Price",
-                markerType: "square",
-                xValueFormatString: "DDD HH:mm:ss",
-                color: "#2364C0",
-                yValueFormatString: "#.### cents USD",
-                dataPoints: [@string.Join(",", eth.ToArray())]
-            },
-            {
-                type: "line",
-                showInLegend: true,
-                name: "RSK Price",
-                //lineDashType: "dash",
-                color: "#119D52",
-                yValueFormatString: "#.### cents USD",
-                dataPoints: [@string.Join(",", rsk.ToArray())]
-            }]
+                    type: "line",
+                    showInLegend: true,
+                    name: "ETH Price",
+                    markerType: "square",
+                    xValueFormatString: "DDD HH:mm:ss",
+                    color: "#2364C0",
+                    yValueFormatString: "#.### cents USD",
+                    dataPoints: [@string.Join(",", ethToday.ToArray())]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: "RSK Price",
+                    //lineDashType: "dash",
+                    color: "#119D52",
+                    yValueFormatString: "#.### cents USD",
+                    dataPoints: [@string.Join(",", rskToday.ToArray())]
+                }]
         };
-        $("#chartContainer").CanvasJSChart(options);
+        $("#today").CanvasJSChart(optionsToday);
 
         function toogleDataSeries(e) {
             if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
