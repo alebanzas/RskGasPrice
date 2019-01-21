@@ -33,13 +33,11 @@
 
 <style type="text/css">
     .red {
-        background-color: red;
-        color: white;
+        color: red;
     }
 
     .green {
-        background-color: green;
-        color: white;
+        color: green;
     }
 </style>
 
@@ -99,7 +97,7 @@
         var met = m.EthGasPriceInUsd() * 100;
         var mrr = m.RskGasPriceInUsd() * 100;
         <tr>
-            <td>@m.Moment.ToString("yyyy MMMM dd")</td>
+            <td>@m.Moment.ToString("yy-MM-dd")</td>
             <td>@(met.ToString("F")) cents</td>
             <td>@(mrr.ToString("F")) cents</td>
             <td class="@(met > mrr ? "green" : "red")">
@@ -118,9 +116,7 @@
         var options = {
             animationEnabled: true,
             theme: "light2",
-            title: {
-                text: "Last 14 days"
-            },
+            backgroundColor: "#102026",
             axisX: {
                 valueFormatString: "DD-MM-YY"
             },
@@ -164,6 +160,7 @@
         var optionsToday = {
             animationEnabled: true,
             theme: "light2",
+            backgroundColor: "#102026",
             axisX: {
                 valueFormatString: "DDD HH:mm:ss"
             },

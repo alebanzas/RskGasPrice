@@ -1,7 +1,10 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #102026;
+    color: #1aad8d;
 }
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -21,4 +24,32 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.github {
+    margin: 10px;
+    width: 30px;
+    height: 30px;
+}
+.github path {
+    fill: #1aad8d;
+}
+
+footer {
+    text-align: center;
+}
+
+.panel-default > .panel-heading {
+    color: #1aad8d;
+    background-color: #102026;
+    border-color: #1aad8d;
+}
+.panel {
+    background-color: #102026;
+}
+.panel-default {
+    border-color: #1aad8d;
+}
+.navbar-inverse { 
+    background-color: #102026;
 }
