@@ -53,3 +53,19 @@ footer {
 .navbar-inverse { 
     background-color: #102026;
 }
+
+input {
+    background: #102026;
+    border: 1px solid #1aad8d;
+    border-radius: .25em;
+    color: #1aad8d;
+    height: 38px;
+    font-size: 1em;
+    outline: none;
+    padding: 2px 10px;
+    margin: 1px;
+    width: 100%
+}
+input.error {
+    border: 1px solid red;
+}

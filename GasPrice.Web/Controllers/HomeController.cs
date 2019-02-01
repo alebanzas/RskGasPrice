@@ -46,5 +46,13 @@ namespace GasPrice.Web.Controllers
 
             return View(model);
         }
+
+
+        public ActionResult Converter()
+        {
+            var summary = _gasService.GetSummaryByDate(DateTime.UtcNow);
+            
+            return View(summary);
+        }
     }
 }
