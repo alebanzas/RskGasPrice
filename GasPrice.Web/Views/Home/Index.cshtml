@@ -46,20 +46,23 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading">ETH (USD cents)</div>
-                <div class="panel-body">@(et.ToString("C3"))</div>
+                <div class="panel-heading">ETH Tx Price (U$S¢)</div>
+                <div class="panel-body">@(et.ToString("F3"))¢</div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading">RSK (USD cents)</div>
-                <div class="panel-body">@(rr.ToString("C3"))</div>
+                <div class="panel-heading">RSK Tx Price (U$S¢)</div>
+                <div class="panel-body">@(rr.ToString("F3"))¢</div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-heading">RSK vs ETH</div>
-                <div class="panel-body @style">@($"{(et - rr):+;-;} {((et / rr) * 100):F} %")</div>
+                <div class="panel-body @style">
+                    @(et > rr ? "-" : "+")
+                    @($"{Math.Abs(((et / rr) * 100)-100):F} %")
+                </div>
             </div>
         </div>
     </div>
@@ -88,8 +91,8 @@
 <table style="width: 100%;">
     <tr>
         <th>Day</th>
-        <th>ETH Price</th>
-        <th>RSK Price</th>
+        <th>ETH Tx Price</th>
+        <th>RSK Tx Price</th>
         <th>Time</th>
     </tr>
     @foreach (var m in Model.SummaryList.OrderByDescending(x => x.Moment))
@@ -98,10 +101,11 @@
         var mrr = m.RskGasPriceInUsd() * 100;
         <tr>
             <td>@m.Moment.ToString("yy-MM-dd")</td>
-            <td>@(met.ToString("F")) cents</td>
-            <td>@(mrr.ToString("F")) cents</td>
+            <td>@(met.ToString("F3")) ¢</td>
+            <td>@(mrr.ToString("F3")) ¢</td>
             <td class="@(met > mrr ? "green" : "red")">
-                @($"{(met - mrr):+;-;} {((met / mrr) * 100):F} %")
+                @(met > mrr ? "-" : "+")
+                @($"{Math.Abs(((met / mrr) * 100)-100):F} %")
             </td>
         </tr>
     }
@@ -121,8 +125,8 @@
                 valueFormatString: "DD-MM-YY"
             },
             axisY: {
-                title: "Gas price in USD cents",
-                suffix: "cents"
+                title: "Gas price in U$S ¢",
+                suffix: "¢"
                 //minimum: 30
             },
             toolTip: {
@@ -142,7 +146,7 @@
                     markerType: "square",
                     xValueFormatString: "DD-MM-YY",
                     color: "#2364C0",
-                    yValueFormatString: "#.### cents USD",
+                    yValueFormatString: "#.### ¢",
                     dataPoints: [@string.Join(",", eth.ToArray())]
                 },
                 {
@@ -151,7 +155,7 @@
                     name: "RSK Price",
                     //lineDashType: "dash",
                     color: "#119D52",
-                    yValueFormatString: "#.### cents USD",
+                    yValueFormatString: "#.### ¢",
                     dataPoints: [@string.Join(",", rsk.ToArray())]
                 }]
         };
@@ -165,8 +169,8 @@
                 valueFormatString: "DDD HH:mm:ss"
             },
             axisY: {
-                title: "Gas price in USD cents",
-                suffix: "cents"
+                title: "Gas price in U$S¢",
+                suffix: "¢"
                 //minimum: 30
             },
             toolTip: {
@@ -182,20 +186,20 @@
             data: [{
                     type: "line",
                     showInLegend: true,
-                    name: "ETH Price",
+                    name: "ETH Tx Price",
                     markerType: "square",
                     xValueFormatString: "DDD HH:mm:ss",
                     color: "#2364C0",
-                    yValueFormatString: "#.### cents USD",
+                yValueFormatString: "#.### ¢",
                     dataPoints: [@string.Join(",", ethToday.ToArray())]
                 },
                 {
                     type: "line",
                     showInLegend: true,
-                    name: "RSK Price",
+                    name: "RSK Tx Price",
                     //lineDashType: "dash",
                     color: "#119D52",
-                    yValueFormatString: "#.### cents USD",
+                    yValueFormatString: "#.### ¢",
                     dataPoints: [@string.Join(",", rskToday.ToArray())]
                 }]
         };
