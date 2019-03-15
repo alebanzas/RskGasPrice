@@ -24,7 +24,7 @@
 
     var et = Model.TodaySummary.EthGasPriceInUsd() * 100;
     var rr = Model.TodaySummary.RskGasPriceInUsd() * 100;
-    var style = et > rr ? "green" : "red";
+    var style = et > rr ? "green" : "orange";
 }
 @section scripts
 {
@@ -32,8 +32,8 @@
 }
 
 <style type="text/css">
-    .red {
-        color: red;
+    .orange {
+        color: orange;
     }
 
     .green {
@@ -88,7 +88,7 @@
 <h2>Last 14 days</h2>
 <div id="summary" style="height: 400px; width: 100%;"></div>
 
-<table style="width: 100%;">
+<table id="table-summary" align="center">
     <tr>
         <th>Day</th>
         <th>ETH Tx Price</th>
@@ -103,7 +103,7 @@
             <td>@m.Moment.ToString("yy-MM-dd")</td>
             <td>@(met.ToString("F3")) ¢</td>
             <td>@(mrr.ToString("F3")) ¢</td>
-            <td class="@(met > mrr ? "green" : "red")">
+            <td class="@(met > mrr ? "green" : "orange")">
                 @(met > mrr ? "-" : "+")
                 @($"{Math.Abs(((met / mrr) * 100)-100):F} %")
             </td>
@@ -111,8 +111,12 @@
     }
 </table>
 
-<h2>Today data</h2>
+<h2>Today's data</h2>
 <div id="today" style="height: 400px; width: 100%;"></div>
+
+<hr/>
+<p>Source: BTC & ETH Price information from <a href="http://coinmarketcap.com" target="_blank">http://coinmarketcap.com</a></p>
+<p>Tx Price: A transaction that consumes 21000 gas</p>
 
 <script>
     window.onload = function () {

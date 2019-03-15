@@ -69,3 +69,13 @@ input {
 input.error {
     border: 1px solid red;
 }
+
+#table-summary {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 35px;
+    text-align: center
+}
+#table-summary th {
+    text-align: center;
+}

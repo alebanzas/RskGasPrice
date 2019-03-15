@@ -11,6 +11,7 @@ namespace GasPrice.Data.Services
     {
 
         private readonly WebCache _cache = new WebCache();
+        private readonly GasAzurePersistor _gasAzurePersistor = new GasAzurePersistor(ConfigurationManager.ConnectionStrings["AzureWebJobsStorage"].ConnectionString);
 
         public IEnumerable<GasMeasurement> GetByDate(DateTime d)
         {
@@ -59,14 +60,12 @@ namespace GasPrice.Data.Services
 
         private IEnumerable<GasMeasurement> GetByDateFromStorage(DateTime d)
         {
-            var gap = new GasAzurePersistor(ConfigurationManager.ConnectionStrings["AzureWebJobsStorage"].ConnectionString);
-            return gap.Get(d);
+            return _gasAzurePersistor.Get(d);
         }
         
         private GasMeasurement GetSummaryByDateFromStorage(DateTime d)
         {
-            var gap = new GasAzurePersistor(ConfigurationManager.ConnectionStrings["AzureWebJobsStorage"].ConnectionString);
-            return gap.GetSummary(d);
+            return _gasAzurePersistor.GetSummary(d);
         }
     }
 }
