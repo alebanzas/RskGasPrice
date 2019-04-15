@@ -68,16 +68,21 @@ namespace GasPrice.Data.Services
 
             var html = new Scraper(new Uri("https://ethgasstation.info/index.php"), Encoding.UTF8).GetNodes();
 
-            var table = html.QuerySelectorAll("table.table").First().QuerySelectorAll("tbody tr");
+            var table = html.QuerySelectorAll("div.count_top");
 
-            var safeLow = table.Skip(0).Take(1).First().QuerySelectorAll("td").Skip(1).Take(1).First().InnerText;
-            var standard = table.Skip(1).Take(1).First().QuerySelectorAll("td").Skip(1).Take(1).First().InnerText;
-            var fast = table.Skip(2).Take(1).First().QuerySelectorAll("td").Skip(1).Take(1).First().InnerText;
+            var safeLow = CleanText(table.Skip(5).Take(1).First().InnerText);
+            var standard = CleanText(table.Skip(3).Take(1).First().InnerText);
+            var fast = CleanText(table.Skip(1).Take(1).First().InnerText);
 
             return new Tuple<decimal, decimal, decimal>(
                 decimal.Parse(safeLow),
                 decimal.Parse(standard),
                 decimal.Parse(fast));
+        }
+
+        private static string CleanText(string innerText)
+        {
+            return innerText.Split('/')[0].Split('$')[1];
         }
     }
 
