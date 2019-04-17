@@ -55,6 +55,7 @@
     <Compile Include="AzureStorage\GasAzurePersistor.cs" />
     <Compile Include="Interfaces\IGasPersistor.cs" />
     <Compile Include="Models\CoinMarketCapDTOModels.cs" />
+    <Compile Include="Models\EthGasPriceDTOModel.cs" />
     <Compile Include="Models\GasMeasurement.cs" />
     <Compile Include="Models\RskJsonRpcModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using GasPrice.Data.Models;
 using Newtonsoft.Json;
@@ -64,25 +66,16 @@ namespace GasPrice.Data.Services
 
         public Tuple<decimal, decimal, decimal> GetEthGasPrice()
         {
-            //https://ethgasstation.info/index.php
+            var c = new HttpClient();
+            //returns eth gas price in gWei
+            var r = c.GetStringAsync("https://ethgasstation.info/json/ethgasAPI.json").Result;
 
-            var html = new Scraper(new Uri("https://ethgasstation.info/index.php"), Encoding.UTF8).GetNodes();
-
-            var table = html.QuerySelectorAll("div.count_top");
-
-            var safeLow = CleanText(table.Skip(5).Take(1).First().InnerText);
-            var standard = CleanText(table.Skip(3).Take(1).First().InnerText);
-            var fast = CleanText(table.Skip(1).Take(1).First().InnerText);
+            var o = JsonConvert.DeserializeObject<EthGasPriceDTOModel>(r);
 
             return new Tuple<decimal, decimal, decimal>(
-                decimal.Parse(safeLow),
-                decimal.Parse(standard),
-                decimal.Parse(fast));
-        }
-
-        private static string CleanText(string innerText)
-        {
-            return innerText.Split('/')[0].Split('$')[1];
+                decimal.Parse(o.safeLow.ToString(CultureInfo.InvariantCulture)),
+                decimal.Parse(o.average.ToString(CultureInfo.InvariantCulture)),
+                decimal.Parse(o.fast.ToString(CultureInfo.InvariantCulture)));
         }
     }
 
