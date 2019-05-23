@@ -95,7 +95,7 @@
         <th>RSK Tx Price</th>
         <th>Time</th>
     </tr>
-    @foreach (var m in Model.SummaryList.OrderByDescending(x => x.Moment))
+    @foreach (var m in Model.SummaryList.Where(x => x.IsValid()).OrderByDescending(x => x.Moment))
     {
         var met = m.EthGasPriceInUsd() * 100;
         var mrr = m.RskGasPriceInUsd() * 100;

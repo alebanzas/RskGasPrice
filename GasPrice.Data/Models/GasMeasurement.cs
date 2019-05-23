@@ -38,5 +38,13 @@ namespace GasPrice.Data.Models
             return ethInBtc * EthVsUsd * 21000;
         }
 
+        public bool IsValid()
+        {
+            return EthGasPriceStandard != 0 &&
+                   RSKMinGasPrice != 0 &&
+                   BtcVsUsd != 0 &&
+                   EthVsUsd != 0;
+
+        }
     }
 }
