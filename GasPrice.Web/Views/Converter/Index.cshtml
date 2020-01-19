@@ -4,99 +4,74 @@
 
 <h2>Number</h2>
 <form onsubmit="return false;" id="numberconvert">
-    <div>
-        <div class="form-group row">
-            <label for="wei" class="col-xs-4">Decimal</label>
-            <div class=" col-xs-8">
-                <input type="text" name="decimal" data-function="decToHex" data-result="input[name='hexadecimal']" placeholder="Type decimal" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="kwei" class="col-xs-4">Hexadecimal</label>
-            <div class="col-xs-8">
-                <input type="text" name="hexadecimal" data-function="hexToDec" data-result="input[name='decimal']" placeholder="Type hexadecimal" />
-            </div>
-        </div>
-    </div>
+    <table class="table">
+        <tr>
+            <td><label for="wei" class="col-xs-4">Decimal</label></td>
+            <td><input type="text" name="decimal" data-function="decToHex" data-result="input[name='hexadecimal']" placeholder="Type decimal" /></td>
+        </tr>
+        <tr>
+            <td><label for="kwei" class="col-xs-4">Hexadecimal</label></td>
+            <td><input type="text" name="hexadecimal" data-function="hexToDec" data-result="input[name='decimal']" placeholder="Type hexadecimal" /></td>
+        </tr>
+    </table>
 </form>
 
 <h2>RBTC</h2>
 <form onsubmit="return false;" id="rbtcconvert">
-    <div>
-        <div class="form-group row">
-            <label for="wei" class="col-xs-4">Wei</label>
-            <div class=" col-xs-8">
-                <input type="text" name="wei" id="wei" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="kwei" class="col-xs-4">Kwei, Ada, FemtoRBTC</label>
-            <div class="col-xs-8">
-                <input type="text" name="kwei" id="kwei" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="mwei" style="font-size:0.75em" class="col-xs-4">Mwei, Babbage, PicoRBTC</label>
-            <div class="col-xs-8">
-                <input type="text" name="mwei" id="mwei" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="gwei" style="font-size:0.75em" class="col-xs-4">Gwei, Shannon, NanoRBTC, Nano</label>
-            <div class="col-xs-8">
-                <input type="text" name="gwei" id="gwei" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="szabo" class="col-xs-4">Szabo, MicroRBTC,Micro</label>
-            <div class="col-xs-8">
-                <input type="text" name="szabo" id="szabo" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="finney" class="col-xs-4">Finney, MilliRBTC,Milli</label>
-            <div class="col-xs-8">
-                <input type="text" name="finney" id="finney" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="rbtc" class="col-xs-4">RBTC</label>
-            <div class="col-xs-8">
-                <input type="text" name="rbtc" id="rbtc" oninput="calculate(this)" value="1">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="krbtc" class="col-xs-4">KRBTC, Grand,Einstein</label>
-            <div class="col-xs-8">
-                <input type="text" name="krbtc" id="krbtc" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="mrbtc" class="col-xs-4">MRBTC</label>
-            <div class="col-xs-8">
-                <input type="text" name="mrbtc" id="mrbtc" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="grbtc" class="col-xs-4">GRBTC</label>
-            <div class="col-xs-8">
-                <input type="text" name="grbtc" id="grbtc" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="trbtc" class="col-xs-4">TRBTC</label>
-            <div class="col-xs-8">
-                <input type="text" name="trbtc" id="trbtc" oninput="calculate(this)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="usd" class="col-xs-4" style="font-weight: bold">USD<span style="font-size: 0.7em;">(at @(Model.BtcVsUsd.ToString("C2"))$ p/ BTC)</span></label>
-            <div class="col-xs-8">
-                <input type="text" name="usd" id="usd" data-rate="@Model.BtcVsUsd.ToString("F2")" readonly>
-            </div>
-        </div>
-    </div>
+    <table class="table">
+        <tr>
+            <td><label for="wei" class="col-xs-4">Wei</label></td>
+            <td><input type="text" name="wei" id="wei" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="kwei" class="col-xs-4">Kwei, Ada, FemtoRBTC</label></td>
+            <td><input type="text" name="kwei" id="kwei" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="mwei" style="font-size:0.75em" class="col-xs-4">Mwei, Babbage, PicoRBTC</label></td>
+            <td><input type="text" name="mwei" id="mwei" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="gwei" style="font-size:0.75em" class="col-xs-4">Gwei, Shannon, NanoRBTC, Nano</label></td>
+            <td><input type="text" name="gwei" id="gwei" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="szabo" class="col-xs-4">Szabo, MicroRBTC,Micro</label></td>
+            <td><input type="text" name="szabo" id="szabo" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="finney" class="col-xs-4">Finney, MilliRBTC,Milli</label></td>
+            <td><input type="text" name="finney" id="finney" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="rbtc" class="col-xs-4">RBTC</label></td>
+            <td><input type="text" name="rbtc" id="rbtc" oninput="calculate(this)" value="1"></td>
+        </tr>
+        <tr>
+            <td><label for="krbtc" class="col-xs-4">KRBTC, Grand,Einstein</label></td>
+            <td><input type="text" name="krbtc" id="krbtc" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="mrbtc" class="col-xs-4">MRBTC</label></td>
+            <td><input type="text" name="mrbtc" id="mrbtc" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="grbtc" class="col-xs-4">GRBTC</label></td>
+            <td><input type="text" name="grbtc" id="grbtc" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="trbtc" class="col-xs-4">TRBTC</label></td>
+            <td><input type="text" name="trbtc" id="trbtc" oninput="calculate(this)"></td>
+        </tr>
+        <tr>
+            <td><label for="usd" class="col-xs-4" style="font-weight: bold">USD<span style="font-size: 0.7em;">(at @(Model.BtcVsUsd.ToString("C2"))$ p/ BTC)</span></label></td>
+            <td><input type="text" name="usd" id="usd" data-rate="@Model.BtcVsUsd.ToString("F2")" readonly></td>
+        </tr>
+
+    </table>
 </form>
+
+<a href="https://developers.rsk.co/rsk/rbtc/gas/" class="next green-button">Learn more about gas</a>
 
 @section scripts
 {

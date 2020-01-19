@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -157,25 +159,109 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\code.css" />
+    <Content Include="assets\css\owl.carousel.min.css" />
+    <Content Include="assets\css\owl.theme.default.min.css" />
+    <Content Include="assets\css\styles.css" />
+    <Content Include="assets\css\styles_dark.css" />
+    <Content Include="assets\img\black_shape.png" />
+    <Content Include="assets\img\dark_green_shape.png" />
+    <Content Include="assets\img\favicons\android-chrome-192x192.png" />
+    <Content Include="assets\img\favicons\android-chrome-512x512.png" />
+    <Content Include="assets\img\favicons\apple-touch-icon.png" />
+    <Content Include="assets\img\favicons\browserconfig.xml" />
+    <Content Include="assets\img\favicons\favicon-16x16.png" />
+    <Content Include="assets\img\favicons\favicon-32x32.png" />
+    <Content Include="assets\img\favicons\favicon.ico" />
+    <Content Include="assets\img\favicons\mstile-150x150.png" />
+    <Content Include="assets\img\favicons\safari-pinned-tab.svg" />
+    <Content Include="assets\img\green_shape.png" />
+    <Content Include="assets\img\next-arrow.png" />
+    <Content Include="assets\img\powered_by_iov.svg" />
+    <Content Include="assets\img\prev-arrow.png" />
+    <Content Include="assets\img\rsk_logo.svg" />
+    <Content Include="assets\js\main.js" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="assets\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="assets\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="assets\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="assets\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="assets\vendor\carousel\owl.carousel.min.js" />
+    <Content Include="assets\vendor\jquery\jquery.js" />
+    <Content Include="assets\vendor\jquery\jquery.min.js" />
+    <Content Include="assets\vendor\jquery\jquery.slim.js" />
+    <Content Include="assets\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\.gitignore" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\jquery.mCustomScrollbar.css" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\jquery.mCustomScrollbar.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\jquery.mCustomScrollbar.min.css" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\minified\jquery-1.11.0.min.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\minified\jquery-1.9.1.min.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\minified\jquery-2.1.0.min.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\minified\jquery-ui-1.10.4.min.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\minified\jquery.mCustomScrollbar.min.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\minified\jquery.mousewheel-3.0.6.min.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\minified\jquery.mousewheel.min.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\uncompressed\jquery.mCustomScrollbar.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\uncompressed\jquery.mousewheel-3.0.6.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\uncompressed\jquery.mousewheel.js" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\LICENSE.txt" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\mCSB_buttons.png" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\favicon-16x16.png" />
     <Content Include="Content\favicon-32x32.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bignumber.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="assets\img\favicons\site.webmanifest" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="assets\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="assets\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="assets\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="assets\vendor\bootstrap\js\bootstrap.js.map" />
+    <Content Include="assets\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="assets\vendor\jquery\jquery.min.map" />
+    <Content Include="assets\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\bower.json" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\js\minified\jquery.mCustomScrollbar.min.js.gz" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\package.json" />
+    <Content Include="assets\vendor\malihu-custom-scrollbar-plugin-master\malihu-custom-scrollbar-plugin-master\readme.md" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
     <None Include="Properties\PublishProfiles\ethrsk - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\rskgasstation - Web Deploy.pubxml" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\converter.js" />
     <Content Include="Scripts\index.js.flow" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -187,6 +273,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\src\index.js" />
     <Content Include="Scripts\src\methods\defaults.js" />
     <Content Include="Scripts\src\methods\destroy.js" />
@@ -277,6 +367,11 @@
     <Content Include="Scripts\umd\popper.js.flow" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -290,11 +385,18 @@
       <Name>GasPrice.Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

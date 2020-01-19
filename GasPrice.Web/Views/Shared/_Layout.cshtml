@@ -1,14 +1,8 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title RSK Gas Station</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <!-- Google Tag Manager -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124571797-1"></script>
-    <link rel="icon" type="image/png" sizes="32x32" href="/Content/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/Content/favicon-16x16.png" />
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -16,38 +10,207 @@
 
         gtag('config', 'UA-124571797-1');
     </script>
-
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="RSK is the first open source Smart Contract platform secured by the Bitcoin Network. RSK adds value and expand functionality to the Bitcoin ecosystem by providing smart contracts and greater scalability.">
+    <meta name="author" content="RSK">
+    <title>@ViewBag.Title RSK Gas Station</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/assets/img/favicons/safari-pinned-tab.svg" color="#000000">
+    <link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-config" content="/assetsimg/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600,700,800&display=swap" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Libraries CSS Files -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/vendor/malihu-custom-scrollbar-plugin-master/malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.css" />
+    <!-- Main Stylesheet File -->
+    <link href="/assets/css/styles.css" rel="stylesheet">
+    <link href="/assets/css/styles_dark.css" rel="stylesheet" disabled>
+    <link href="/assets/css/code.css" rel="stylesheet">
+    <link href="/assets/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/assets/css/owl.theme.default.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("RSK Gas Station", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Tx Price", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Unit converter", "Index", "Converter")</li>
+            <a class="navbar-brand" href="https://rsk.co"><img id="logo" src="/assets/img/rsk_logo.svg" class="logo" alt="RSK Gas Station"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Gas Station</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/converter">Unit converter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://developers.rsk.co/the-stack" target="_self">
+                            The Stack
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://developers.rsk.co/develop" target="_self">Develop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.rsk.co/development-roadmap" target="_blank">Roadmap</a>
+                    </li>
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer class="App-footer">
-            <a target="_blank" href="https://github.com/rsksmart/" rel="noopener noreferrer"><svg class="github" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>github</title><path d="M12 0.296c-6.627 0-12 5.372-12 12 0 5.302 3.438 9.8 8.206 11.387 0.6 0.111 0.82-0.26 0.82-0.577 0-0.286-0.011-1.231-0.016-2.234-3.339 0.726-4.043-1.416-4.043-1.416-0.546-1.387-1.332-1.756-1.332-1.756-1.089-0.745 0.082-0.729 0.082-0.729 1.205 0.085 1.839 1.237 1.839 1.237 1.070 1.834 2.807 1.304 3.492 0.997 0.108-0.775 0.418-1.305 0.762-1.605-2.666-0.303-5.467-1.332-5.467-5.93 0-1.31 0.469-2.381 1.237-3.221-0.125-0.302-0.536-1.523 0.116-3.176 0 0 1.008-0.322 3.301 1.23 0.957-0.266 1.984-0.399 3.004-0.404 1.020 0.005 2.047 0.138 3.006 0.404 2.291-1.553 3.297-1.23 3.297-1.23 0.653 1.653 0.243 2.873 0.118 3.176 0.769 0.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921 0.43 0.372 0.814 1.103 0.814 2.222 0 1.606-0.014 2.898-0.014 3.293 0 0.319 0.216 0.694 0.824 0.576 4.765-1.588 8.199-6.085 8.199-11.385 0-6.628-5.373-12-12-12z"></path></svg></a>
-            <p>Copyright © 2015-@DateTime.Now.Year RSK Labs. All rights reserved.</p>
-        </footer>
-    </div>
+    </nav>
+    <div class="navbar_bottom_shape"></div>
+    <!-- Page Content -->
+    <!-- home -->
+    <section id="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 main-central-col" id="top">
 
+                    @RenderBody()
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- footer -->
+    <footer id="footer" class="section-bg">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <img src="/assets/img/powered_by_iov.svg" class="img-fluid powered_by">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <div class="footer-info">
+                                    <p>Rsk is the most secure smart contract<span class="falsebreak"><br></span> network in the world and enables<span class="falsebreak"><br></span> decentralized applications secured by the<span class="falsebreak"><br></span> Bitcoin Network to empower people and<span class="falsebreak"><br></span> improve the quality of life of millions.</p>
+                                    <br>
+                                    <a href="https://developers.rsk.co/" target="_blank" class="footer-button rounded" title="Start now">Start now</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="footer-links">
+                                    <ul>
+                                        <li class="negbottom">Whitepapers</li>
+                                        <li class="sub-item-footer"><a href="https://www.rsk.co/Whitepapers/RSK_White_Paper-ORIGINAL.pdf" rel="noopener noreferrer" target="_blank">Original</a></li>
+                                        <li class="sub-item-footer"><a href="https://www.rsk.co/Whitepapers/RSK-White-Paper-Updated.pdf" rel="noopener noreferrer" target="_blank">Updated</a></li>
+                                        <li class="sub-item-footer"><a href="https://docs.rifos.org/rif-whitepaper-en.pdf" rel="noopener noreferrer" target="_blank">RIF</a></li>
+                                        <li><a href="https://fund.rsk.co" rel="noopener noreferrer" target="_blank">Ecosystem Fund</a></li>
+                                        <li><a href="https://studio.rsk.co" rel="noopener noreferrer" target="_blank">Innovation Studio</a></li>
+                                        <li><a href="https://mining.rsk.co" rel="noopener noreferrer" target="_blank">Merged Mining</a></li>
+                                        <li><a href="https://grants.rsk.co" rel="noopener noreferrer" target="_blank">Grants Program</a></li>
+                                        <li><a href="https://rsk.co/defi" rel="noopener noreferrer" target="_blank">Defi</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="footer-links">
+                                    <ul>
+                                        <li><a href="https://www.rsk.co/development-roadmap/" target="_blank">Roadmap</a></li>
+                                        <li><a href="https://www.rsk.co/faqs/" target="_blank">Faqs</a></li>
+                                        <li><a href="https://www.iovlabs.org/about_us.html" target="_blank">About us</a></li>
+                                        <li><a href="https://www.iovlabs.org/contact.html" target="_blank">Contact</a></li>
+                                        <li><a href="https://rsk.co/noticias/" target="_blank">Blog</a></li>
+                                        <li><a href="https://rsk.co/Use-cases">Use cases</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="footer-links">
+                                    <ul>
+                                        <li><a class="bold" href="https://www.rsk.co/Brand_Guidelines/RSK_BrandManual_V6.pdf" target="_blank">Brand Guidelines</a></li>
+                                        <li><a class="bold" href="https://www.rsk.co/terms-conditions/">Terms &amp; Conditions</a></li>
+                                        <li><a class="bold mb-30" href="https://www.rsk.co/privacy-policy">Privacy Policy</a></li>
+                                        <li><a href="https://developers.rsk.co/" target="_blank" class="footer-button" title="Documentation">Documentation</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="https://twitter.com/rsksmart" target="_blank" class="twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/rsksmart" target="_blank" class="facebook"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.facebook.com/RSKsmart/" target="_blank" class="linkedin"><i class="fab fa-facebook"></i></a>
+                            <a href="https://gitter.im/rsksmart" target="_blank" class="instagram"><i class="fab fa-gitter"></i></a>
+                            <a href="https://www.reddit.com/r/rootstock/" target="_blank" class="instagram"><i class="fab fa-reddit"></i></a>
+                            <a href="https://t.me/rskofficialcommunity" target="_blank" class="instagram"><i class="fab fa-telegram"></i></a>
+                            <a href="https://medium.com/@("@RSKNews")" target="_blank" class="instagram"><i class="fab fa-medium"></i></a>
+                            <a href="https://t.me/rsksmartcontract" target="_blank" class="instagram"><i class="fab fa-telegram"></i></a>
+                            <a href="https://www.instagram.com/rsksmart/" target="_blank" class=""><i class="fab fa-instagram"></i></a>
+                            <a href="https://bitcointalk.org/index.php?topic=5124334" target="_blank" class=""><i class="fab fa-btc"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 pl-0-mobile">
+                            <p class="copyright">Copyright © 2015 - 2020 RSK Labs. All rights reserved.</p>
+                        </div>
+                        <div class="col-md-6 col-xs-12 pl-0-mobile">
+                            <p class="credits"> RSK Public Key (69F6 F997 2497 8762 D541 8AE4 58D2 260D 5998 6758)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- #footer -->
+    <a href="#top" class="scrollup"><p>Go to top</p></a>
+    <!-- Bootstrap core JavaScript -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/vendor/malihu-custom-scrollbar-plugin-master/malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/assets/vendor/carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript">
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            nav: true,
+            center: true,
+            URLhashListener: true,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        });
+
+    </script>
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
