@@ -57,9 +57,9 @@ namespace GasPrice.Data.Services
 
             var o = JsonConvert.DeserializeObject<RskJsonRpcModel>(r);
 
-            var mgp = decimal.Parse(o.result.minimumGasPrice);
+            var mgp = Convert.ToInt32(o.result.minimumGasPrice, 16);
 
-            var mgpgw = mgp / 1000000000; //in gWei
+            var mgpgw = (decimal) mgp / 1000000000; //in gWei
 
             return mgpgw;
         }
