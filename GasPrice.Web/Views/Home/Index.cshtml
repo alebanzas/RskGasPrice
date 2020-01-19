@@ -7,6 +7,7 @@
     var ethToday = new List<string>();
     var rskToday = new List<string>();
     const string template = "{{ x: new Date({1}, {2}, {3}, {4}, {5}), y: {0} }}";
+    bool today = false;
     foreach (var m in Model.SummaryList)
     {
         var e = m.EthGasPriceInUsd() * 100;
@@ -20,6 +21,7 @@
         var r = m.RskGasPriceInUsd() * 100;
         ethToday.Add(string.Format(template, e.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
         rskToday.Add(string.Format(template, r.ToString("##.000"), m.Moment.Year, m.Moment.Month - 1, m.Moment.Day, m.Moment.Hour, m.Moment.Minute));
+        if (e != 0 || r != 0) { today = true; }
     }
 
     var et = Model.TodaySummary.EthGasPriceInUsd() * 100;
@@ -41,49 +43,52 @@
     }
 </style>
 
-<h2>Now</h2>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">ETH Tx Price (U$S¢)</div>
-                <div class="panel-body">@(et.ToString("F3"))¢</div>
+@if (rr != 0)
+{
+    <h2>Now</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">ETH Tx Price (U$S¢)</div>
+                    <div class="panel-body">@(et.ToString("F3"))¢</div>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">RSK Tx Price (U$S¢)</div>
-                <div class="panel-body">@(rr.ToString("F3"))¢</div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">RSK Tx Price (U$S¢)</div>
+                    <div class="panel-body">@(rr.ToString("F3"))¢</div>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">RSK vs ETH</div>
-                <div class="panel-body @style">
-                    @(et > rr ? "-" : "+")
-                    @($"{Math.Abs(((et / rr) * 100)-100):F} %")
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">RSK vs ETH</div>
+                    <div class="panel-body @style">
+                        @(et > rr ? "-" : "+")
+                        @($"{Math.Abs(((et / rr) * 100) - 100):F} %")
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">ETH Value (USD)</div>
-                <div class="panel-body">@(Model.TodaySummary.EthVsUsd.ToString("C3"))</div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">ETH Value (USD)</div>
+                    <div class="panel-body">@(Model.TodaySummary.EthVsUsd.ToString("C3"))</div>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">BTC Value (USD)</div>
-                <div class="panel-body">@(Model.TodaySummary.BtcVsUsd.ToString("C3"))</div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">BTC Value (USD)</div>
+                    <div class="panel-body">@(Model.TodaySummary.BtcVsUsd.ToString("C3"))</div>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
+            <div class="col-sm-4">
 
+            </div>
         </div>
     </div>
-</div>
+}
 
 <h2>Last 14 days</h2>
 <div id="summary" style="height: 400px; width: 100%;"></div>
@@ -105,18 +110,25 @@
             <td>@(mrr.ToString("F3")) ¢</td>
             <td class="@(met > mrr ? "green" : "orange")">
                 @(met > mrr ? "-" : "+")
-                @($"{Math.Abs(((met / mrr) * 100)-100):F} %")
+                @($"{Math.Abs(((met / mrr) * 100) - 100):F} %")
             </td>
         </tr>
     }
 </table>
 
-<h2>Today's data</h2>
-<div id="today" style="height: 400px; width: 100%;"></div>
+@if (today)
+{
+    <h2>Today's data</h2>
+    <div id="today" style="height: 400px; width: 100%;"></div>
+}
 
-<hr/>
+<hr />
 <p>Source: BTC & ETH Price information from <a href="http://coinmarketcap.com" target="_blank">http://coinmarketcap.com</a></p>
 <p>Tx Price: A transaction that consumes 21000 gas</p>
+@if (!today)
+{
+    <p>Today´s information missing. Come back later.</p>
+}
 
 <script>
     window.onload = function () {
@@ -207,7 +219,6 @@
                     dataPoints: [@string.Join(",", rskToday.ToArray())]
                 }]
         };
-        $("#today").CanvasJSChart(optionsToday);
 
         function toogleDataSeries(e) {
             if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -220,3 +231,9 @@
 
     }
 </script>
+@if (today)
+{
+    <script type="text/javascript">
+        $("#today").CanvasJSChart(optionsToday);
+    </script>
+}
