@@ -23,15 +23,16 @@ namespace GasPrice.Data.Services
         public GasMeasurement GetGasMeasure()
         {
             var ethPrice = GetEthGasPrice();
-            
+            var cryptoPrice = _cs.GetInUsd();
+
             return new GasMeasurement
             {
                 RSKMinGasPrice = GetRskMinGasPrice(),
                 EthGasPriceLow = ethPrice.Item1,
                 EthGasPriceStandard = ethPrice.Item2,
                 EthGasPriceFast = ethPrice.Item3,
-                BtcVsUsd = _cs.GetBtcInUsd(),
-                EthVsUsd = _cs.GetEthInUsd(),
+                BtcVsUsd = cryptoPrice.Item1,
+                EthVsUsd = cryptoPrice.Item2,
             };
         }
 
@@ -73,9 +74,9 @@ namespace GasPrice.Data.Services
             var o = JsonConvert.DeserializeObject<EthGasPriceDTOModel>(r);
 
             return new Tuple<decimal, decimal, decimal>(
-                decimal.Parse(o.safeLow.ToString(CultureInfo.InvariantCulture)),
-                decimal.Parse(o.average.ToString(CultureInfo.InvariantCulture)),
-                decimal.Parse(o.fast.ToString(CultureInfo.InvariantCulture)));
+                (decimal)o.safeLow / 100,
+                (decimal)o.average / 100,
+                (decimal)o.fast / 100);
         }
     }
 

@@ -33,7 +33,7 @@ namespace GasPrice.Data.Models
 
         public decimal EthGasPriceInUsd()
         {
-            var ethInBtc = EthGasPriceStandard / 10000000000;
+            var ethInBtc = EthGasPriceStandard / 1000000000;
 
             return ethInBtc * EthVsUsd * 21000;
         }

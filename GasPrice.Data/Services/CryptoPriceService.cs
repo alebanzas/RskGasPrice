@@ -1,4 +1,7 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Configuration;
+using System.Net;
+using System.Net.Http;
 using GasPrice.Data.Models;
 using Newtonsoft.Json;
 
@@ -8,37 +11,40 @@ namespace GasPrice.Data.Services
     {
         /*
          COINMARKETCAP
-        Please limit requests to no more than 30 per minute.
+        Please limit requests to no more than 333 per day. (4´30´´ MAX)
         Endpoints update every 5 minutes.
-        BTC: https://api.coinmarketcap.com/v2/ticker/1/
-        ETH: https://api.coinmarketcap.com/v2/ticker/1027/
+        https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest
         */
 
         public decimal GetBtcInUsd()
         {
-            var c = new HttpClient();
-
-            var r = c.GetStringAsync("https://api.coinmarketcap.com/v2/ticker/1/").Result;
-
-            var o = JsonConvert.DeserializeObject<CoinMarketCapResult>(r);
-
-            return o.data.quotes.USD.price;
+            return GetInUsd().Item1;
         }
 
         public decimal GetEthInUsd()
         {
-            var c = new HttpClient();
+            return GetInUsd().Item2;
+        }
 
-            var r = c.GetStringAsync("https://api.coinmarketcap.com/v2/ticker/1027/").Result;
+        public Tuple<decimal, decimal> GetInUsd()
+        {
+            var c = new WebClient();
+            c.Headers.Add("X-CMC_PRO_API_KEY", ConfigurationManager.AppSettings["CMC_PRO_API_KEY"]);
+
+            var r = c.DownloadString("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=2&convert=USD");
 
             var o = JsonConvert.DeserializeObject<CoinMarketCapResult>(r);
 
-            return o.data.quotes.USD.price;
+            return new Tuple<decimal, decimal>((decimal)o.data[0].quote.USD.price,
+                                               (decimal)o.data[1].quote.USD.price);
+
         }
     }
 
     public interface ICryptoPriceService
     {
+        Tuple<decimal, decimal> GetInUsd();
+
         decimal GetBtcInUsd();
 
         decimal GetEthInUsd();

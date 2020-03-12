@@ -9,7 +9,7 @@ namespace GasPrice.Job
 {
     public class Functions
     {
-        public static void GasRunner([TimerTrigger("0 * * * * *", RunOnStartup = true)] TimerInfo timerInfo, TextWriter log)
+        public static void GasRunner([TimerTrigger("0 */5 * * * *", RunOnStartup = true)] TimerInfo timerInfo, TextWriter log)
         {
             log.WriteLine($"C# Timer trigger function executed at: {DateTime.Now}");
 

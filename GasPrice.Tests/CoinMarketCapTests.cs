@@ -25,5 +25,13 @@ namespace GasPrice.Tests
             Console.WriteLine(s.GetEthInUsd());
 
         }
+
+        [TestMethod]
+        public void WhenLookingForCryptoWithUSDRateThenGetTheRate()
+        {
+            var s = new CoinMarketCapPriceService();
+            var r = s.GetInUsd();
+            Console.WriteLine($"{r.Item1} {r.Item2}");
+        }
     }
 }
