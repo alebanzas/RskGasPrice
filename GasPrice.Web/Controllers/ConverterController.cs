@@ -28,6 +28,7 @@ namespace GasPrice.Web.Controllers
 
 
         // GET: Converter
+        [AllowCrossSite]
         public FileStreamResult CMC(string CMC_PRO_API_KEY)
         {
             HttpClient client = new HttpClient();

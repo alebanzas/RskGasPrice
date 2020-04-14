@@ -1,0 +1,32 @@
+﻿@model GasPrice.Web.Models.FaucetViewModel
+
+<h1>tR-BTC Faucet</h1>
+
+@if (string.IsNullOrEmpty(Model.TransactionHash))
+{
+    using (Html.BeginForm())
+    {
+        <table class="table">
+            <tr>
+                <td><label for="to" class="col-xs-4">Address</label> (<a href="https://developers.rsk.co/develop/apps/wallets/" target="_blank">need one?</a>)</td>
+                <td>
+                    <input type="text" name="to" placeholder="0x000.." value="@Model.To" />
+                    @Html.ValidationMessage(nameof(Model.To))
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Dispense" /></td>
+            </tr>
+        </table>
+    }
+}
+else
+{
+    @Html.Partial("Ok", Model)
+}
+
+<br />
+
+<a href="https://developers.rsk.co/rsk/rbtc/gas/" class="next green-button">Learn more about gas</a>
+<a href="https://developers.rsk.co/tutorials/" class="next green-button">Start building</a>
