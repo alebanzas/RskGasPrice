@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using GasPrice.Data.Services;
 using GasPrice.Web.Models;
+using BotDetect.Web.Mvc;
 
 namespace GasPrice.Web.Controllers
 {
@@ -28,6 +29,15 @@ namespace GasPrice.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(FaucetViewModel model)
         {
+            var mvcCaptcha = new MvcCaptcha(nameof(FaucetViewModel));
+
+            if (!mvcCaptcha.Validate(model.CaptchaCode)) 
+            {
+                ModelState.AddModelError(nameof(model.CaptchaCode), "Invalid captcha");
+
+                return View(model);
+            }
+
             if (!model.To.IsValidEthereumAddressHexFormat())
             {
                 ModelState.AddModelError(nameof(model.To), "Invalid address");
