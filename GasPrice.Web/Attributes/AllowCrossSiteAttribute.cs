@@ -5,6 +5,12 @@ public class AllowCrossSiteAttribute : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext filterContext)
     {
+        if(filterContext.HttpContext == null || filterContext.HttpContext.Request.UrlReferrer == null)
+        {
+            filterContext.Result = new HttpNotFoundResult();
+            return;
+        }
+
         var originSegments = filterContext.HttpContext.Request.UrlReferrer.AbsoluteUri.Split('/');
         var originUrl = string.Format("{0}//{1}", originSegments[0], originSegments[2]);
 

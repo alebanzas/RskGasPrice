@@ -29,17 +29,24 @@ namespace GasPrice.Web.Controllers
 
         // GET: Converter
         [AllowCrossSite]
-        public FileStreamResult CMC(string CMC_PRO_API_KEY)
+        public ActionResult CMC(string CMC_PRO_API_KEY)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", 
-                string.IsNullOrWhiteSpace(CMC_PRO_API_KEY) ? 
-                        ConfigurationManager.AppSettings["CMC_PRO_API_KEY"] : 
-                        CMC_PRO_API_KEY);
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY",
+                    string.IsNullOrWhiteSpace(CMC_PRO_API_KEY) ?
+                            ConfigurationManager.AppSettings["CMC_PRO_API_KEY"] :
+                            CMC_PRO_API_KEY);
 
-            var r = client.GetStreamAsync("https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?id=1,3626,3701").Result;
+                var r = client.GetStreamAsync("https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?id=1,3626,3701").Result;
 
-            return File(r, "application/json");
+                return File(r, "application/json");
+            }
+            catch(Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.UpgradeRequired, e.Message);
+            }            
         }
     }
 }
